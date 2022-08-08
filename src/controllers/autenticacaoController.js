@@ -29,13 +29,13 @@ export async function signup(_, res) {
 }
 export async function signin(_, res) {
   const { email, password } = res.locals.body;
-  console.log(email);
+
   try {
     const { rows: existeEmail } = await connection.query(
       `SELECT * FROM usuarios WHERE email = $1`,
       [email]
     );
-    console.log(existeEmail);
+
     if (existeEmail.length === 0) {
       return res.status(401).send("Email ou senha inválidos");
     }
@@ -48,7 +48,7 @@ export async function signin(_, res) {
         [existeEmail[0].id, token]
       );
       const { rows: usuarioLogado } = await connection.query(
-        `SELECT usuarios.name,sessoes.token FROM usuarios JOIN sessoes ON sessoes."usuarioId" = usuarios.id WHERE email = $1;`,
+        `SELECT usuarios.id,usuarios.name,sessoes.token FROM usuarios JOIN sessoes ON sessoes."usuarioId" = usuarios.id WHERE email = $1;`,
         [existeEmail[0].email]
       );
 

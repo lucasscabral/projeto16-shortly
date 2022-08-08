@@ -15,7 +15,7 @@ export async function validaReqUrl(req, res, next) {
   next();
 }
 
-export async function validaIdDelete(req, res, next) {
+export async function validaToken(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
 
